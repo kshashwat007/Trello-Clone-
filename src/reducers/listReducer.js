@@ -12,6 +12,24 @@ const initialState = [
                 text: "this is a random text to test the"
             },
         ]
+    },
+    {
+        title: "Second list",
+        id: 1,
+        cards: [
+            {
+                id: 0,
+                text: "this is a random text to test "
+            },
+            {
+                id: 1,
+                text: "this is a random text to test the"
+            },
+            {
+                id: 2,
+                text: "this is a random text to test the"
+            }
+        ]
     }
 ]
 
