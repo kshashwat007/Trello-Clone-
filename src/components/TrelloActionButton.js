@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import { Icon, Card, Button } from '@material-ui/core';
 import TextArea from 'react-textarea-autosize';
 import './TrelloList.styles.css';
+import {connect} from 'react-redux';
+import {addList} from '../actions/listsActions';
+import {addCard} from '../actions/cardActions';
 
-export default class TrelloActionButton extends Component {
+class TrelloActionButton extends Component {
     
     state = {
         formOpen: false,
@@ -26,6 +29,32 @@ export default class TrelloActionButton extends Component {
         this.setState({
             text: e.target.value
         })
+    }
+
+    handleAddList = () => {
+        const {dispatch} = this.props;
+        const {text} = this.state;
+
+        if(text){
+            this.setState({
+                text: ""
+            })
+            dispatch(addList(text))
+        }
+
+        return;
+    }
+
+    handleAddCard = () => {
+        const {dispatch, listID} = this.props;
+        const {text} = this.state;
+
+        if(text){
+            this.setState({
+                text: ""
+            })
+            dispatch(addCard(listID, text));
+        }
     }
 
     renderAddButton = () => {
@@ -62,7 +91,7 @@ export default class TrelloActionButton extends Component {
                     onChange={this.handleInputChange} style={{resize: "none", width: "100%", outline: "none", border: "none", overflow: "hidden" }}/>
                 </Card>
                 <div className='formButtonGroup'>
-                    <Button variant="contained" style={{color: "white", backgroundColor: "#5aac44"}}>{buttonTitle}{" "}</Button>
+                    <Button onMouseDown={list ? this.handleAddList : this.handleAddCard} variant="contained" style={{color: "white", backgroundColor: "#5aac44"}}>{buttonTitle}{" "}</Button>
                     <Icon style={{marginLeft: 8, cursor: "pointer", }}>close</Icon>
                 </div>
             </div>
@@ -73,3 +102,5 @@ export default class TrelloActionButton extends Component {
         return this.state.formOpen ? this.renderForm() : this.renderAddButton();
     }
 }
+
+export default connect() (TrelloActionButton);
