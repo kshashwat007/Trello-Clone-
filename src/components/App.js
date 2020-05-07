@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import TrelloList from './TrelloList'
 import { connect } from 'react-redux';
-import './App.styles.css';
 import TrelloActionButton from './TrelloActionButton';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { sort } from '../actions/listsActions';
+import styled from 'styled-components';
+
+const ListContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`
 
 class App extends Component {
   
@@ -31,12 +36,12 @@ class App extends Component {
     <DragDropContext onDragEnd={this.onDragEnd}>
       <div className="App">
         <h2>Trello Clone</h2>
-        <div className = 'Container'>
+        <ListContainer>
           {lists.map(list => (
             <TrelloList listID={list.id} key={list.id} title={list.title} cards={list.cards}/>
           ))}
           <TrelloActionButton list />
-        </div>
+          </ListContainer>
       </div>
     </DragDropContext>
     );
